@@ -5,9 +5,10 @@ SERVER = xonotic-local-dedicated
 
 # CC and MAKEFLAGS are always set so ?= has no effect, therefore
 # we use CFLAGS to set default optimisations which users may override
-CFLAGS ?= -pipe -march=native -mtune=native -flto=auto
+CFLAGS ?= -pipe -march=native -mtune=native -flto=auto -sSINGLE_FILE -sUSE_SDL=2
 # user can override this with make -j
 MAKEFLAGS := -j$(shell nproc)
+export CC = emcc
 # DP makefile overrides CFLAGS (exporting CFLAGS does work for d0_blind_id but so does this)
 export CC += $(CFLAGS)
 
@@ -89,7 +90,7 @@ server: d0_blind_id
 
 .PHONY: client
 client: d0_blind_id
-	$(MAKE) -C $(DPSRC) sdl-release
+	emmake -C $(DPSRC) sdl-release
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
 
 .PHONY: both
