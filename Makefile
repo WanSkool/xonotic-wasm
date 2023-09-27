@@ -90,7 +90,12 @@ server: d0_blind_id
 
 .PHONY: client
 client: d0_blind_id
-	emmake -C $(DPSRC) sdl-release
+	make -C $(DPSRC) sdl-release
+	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
+.PHONY: emscripten
+emscripten: export MAKE=emmake make
+	d0_blind_id
+	emmake make -C $(DPSRC) sdl-releace 
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
 
 .PHONY: both
