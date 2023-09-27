@@ -97,6 +97,10 @@ client: d0_blind_id
 emscripten: export MAKE = emmake make
 	export CC = emcc
 	export CC += $(EMFLAGS)
+	# d0_blind_id header location
+	export CC += -I$(PWD)/source/
+	# d0_blind_id static libs location
+	export CC += -L$(PWD)/$(D0SRC)/.libs/
 	d0_blind_id
 	emmake make -C $(DPSRC) sdl-releace 
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
