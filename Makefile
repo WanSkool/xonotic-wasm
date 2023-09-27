@@ -8,7 +8,7 @@ SERVER = xonotic-local-dedicated
 CFLAGS ?= -pipe -march=native -mtune=native -flto=auto -sSINGLE_FILE -sUSE_SDL=2
 # user can override this with make -j
 MAKEFLAGS := -j$(shell nproc)
-export CC = emcc
+
 # DP makefile overrides CFLAGS (exporting CFLAGS does work for d0_blind_id but so does this)
 export CC += $(CFLAGS)
 
@@ -93,7 +93,9 @@ client: d0_blind_id
 	make -C $(DPSRC) sdl-release
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
 .PHONY: emscripten
-emscripten: export MAKE=emmake make
+emscripten: export MAKE = emmake make
+	export CC = emcc
+	export CC += $(CFLAGS)
 	d0_blind_id
 	emmake make -C $(DPSRC) sdl-releace 
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
