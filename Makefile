@@ -93,6 +93,7 @@ server: d0_blind_id
 client: d0_blind_id
 	make -C $(DPSRC) sdl-release
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
+
 .PHONY: emscripten
 emscripten: export MAKE = emmake make
 	export CC = emcc
