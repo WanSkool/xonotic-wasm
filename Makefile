@@ -5,7 +5,8 @@ SERVER = xonotic-local-dedicated
 
 # CC and MAKEFLAGS are always set so ?= has no effect, therefore
 # we use CFLAGS to set default optimisations which users may override
-CFLAGS ?= -pipe -march=native -mtune=native -flto=auto -sSINGLE_FILE -sUSE_SDL=2
+CFLAGS ?= -pipe -march=native -mtune=native -flto=auto 
+EMFLAGS ?= -sUSE_SDL=2
 # user can override this with make -j
 MAKEFLAGS := -j$(shell nproc)
 
@@ -96,6 +97,7 @@ client: d0_blind_id
 emscripten: export MAKE = emmake make
 	export CC = emcc
 	export CC += $(CFLAGS)
+	export CC += $(EMFLAGS)
 	d0_blind_id
 	emmake make -C $(DPSRC) sdl-releace 
 	cp -v $(DPSRC)/darkplaces-sdl $(CLIENT)
